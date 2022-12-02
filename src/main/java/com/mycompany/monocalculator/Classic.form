@@ -166,6 +166,9 @@
           <Dimension value="[65, 30]"/>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="percentActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="clearEntry">
       <Properties>
@@ -219,6 +222,9 @@
           <Dimension value="[65, 30]"/>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="overActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="square">
       <Properties>

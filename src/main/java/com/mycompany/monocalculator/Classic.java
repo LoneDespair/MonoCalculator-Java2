@@ -9,7 +9,7 @@ import java.text.DecimalFormat;
 
 
 public class Classic extends javax.swing.JFrame {
-    static final char ADDITION = '+', SUBTRACTION = '-', MULTIPLICATION = 'x', DIVISION = '÷';
+    static final char ADDITION = '+', SUBTRACTION = '-', MULTIPLICATION = 'x', DIVISION = '÷', PERCENT = '%';
     
     private String previousStr = "";
     private String currentStr = "";
@@ -52,6 +52,10 @@ public class Classic extends javax.swing.JFrame {
             equals();
         }
         
+        if (currentStr.isEmpty()) {
+            currentStr = "0";
+        }
+        
         previousStr = currentStr;
         currentStr = "";
         operation = newOperation;
@@ -79,8 +83,24 @@ public class Classic extends javax.swing.JFrame {
                 previousNum *= currentNum;
                 break;
             case DIVISION:
+                if (currentNum == 0) {
+                    clear();
+                    primaryLabel.setText("Cannot divide by zero");
+                    return;
+                }
+                
                 previousNum /= currentNum;
                 break;
+            case PERCENT:
+                double base = 1;
+                
+                if (previousStr.isEmpty() == false) {
+                    base = previousNum;
+                }
+                
+                previousNum = (previousNum * 100) / currentNum;
+                break;
+                
             default:
                 
                 return;
@@ -89,6 +109,13 @@ public class Classic extends javax.swing.JFrame {
         
         operation = 0;
         justEquals = true;
+        updatePrimaryLabel();
+    }
+    
+    private void clear() {
+        contextLabel.setText("");
+        currentStr = "";
+        operation = 0;
         updatePrimaryLabel();
     }
 
@@ -146,6 +173,11 @@ public class Classic extends javax.swing.JFrame {
         percent.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         percent.setText("%");
         percent.setMinimumSize(new java.awt.Dimension(65, 30));
+        percent.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                percentActionPerformed(evt);
+            }
+        });
 
         clearEntry.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         clearEntry.setText("CE");
@@ -177,6 +209,11 @@ public class Classic extends javax.swing.JFrame {
         over.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         over.setText("1/x");
         over.setMinimumSize(new java.awt.Dimension(65, 30));
+        over.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                overActionPerformed(evt);
+            }
+        });
 
         square.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         square.setText("x²");
@@ -514,10 +551,7 @@ public class Classic extends javax.swing.JFrame {
     }//GEN-LAST:event_divisionActionPerformed
 
     private void clearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearActionPerformed
-        contextLabel.setText("");
-        currentStr = "";
-        operation = 0;
-        updatePrimaryLabel();
+        clear();
     }//GEN-LAST:event_clearActionPerformed
 
     private void clearEntryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearEntryActionPerformed
@@ -562,6 +596,17 @@ public class Classic extends javax.swing.JFrame {
         currentStr = valueFormat.format(currentNum);
         updatePrimaryLabel();
     }//GEN-LAST:event_squareActionPerformed
+
+    private void overActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_overActionPerformed
+        double currentNum = Double.parseDouble(currentStr);
+        currentNum = 1 / currentNum;
+        currentStr = valueFormat.format(currentNum);
+        updatePrimaryLabel();
+    }//GEN-LAST:event_overActionPerformed
+
+    private void percentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_percentActionPerformed
+        setOperation(PERCENT);
+    }//GEN-LAST:event_percentActionPerformed
 
     /**
      * @param args the command line arguments
