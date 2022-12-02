@@ -181,10 +181,20 @@ public class Classic extends javax.swing.JFrame {
         square.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         square.setText("x²");
         square.setMinimumSize(new java.awt.Dimension(65, 30));
+        square.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                squareActionPerformed(evt);
+            }
+        });
 
         squareroot.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         squareroot.setText("√");
         squareroot.setMinimumSize(new java.awt.Dimension(65, 30));
+        squareroot.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                squarerootActionPerformed(evt);
+            }
+        });
 
         division.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         division.setText("÷");
@@ -538,6 +548,20 @@ public class Classic extends javax.swing.JFrame {
         
         updatePrimaryLabel();
     }//GEN-LAST:event_backspaceActionPerformed
+
+    private void squarerootActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_squarerootActionPerformed
+        double currentNum = Double.parseDouble(currentStr);
+        currentNum = Math.sqrt(currentNum);
+        currentStr = valueFormat.format(currentNum);
+        updatePrimaryLabel();
+    }//GEN-LAST:event_squarerootActionPerformed
+
+    private void squareActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_squareActionPerformed
+        double currentNum = Double.parseDouble(currentStr);
+        currentNum *= currentNum;
+        currentStr = valueFormat.format(currentNum);
+        updatePrimaryLabel();
+    }//GEN-LAST:event_squareActionPerformed
 
     /**
      * @param args the command line arguments
